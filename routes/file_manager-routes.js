@@ -26,7 +26,7 @@ router.post('/create_folder', authticateToken, async (req, res) => {
         // check if folder already exists for the particular user
         const checkFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [folder_name, user_id, "./"]);
         if(checkFolder.rows.length > 0){
-            return res.status(401).json({error: 'Folder already exists'});
+            return res.status(403).json({error: 'Folder already exists'});
         }
         
         
@@ -68,13 +68,13 @@ router.post('/create_subfolder', authticateToken, async (req, res) => {
         // check if parent folder exists or not
         const checkFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [parent_folder_name, user_id, "./"]);
         if(checkFolder.rows.length === 0){
-            return res.status(401).json({error: 'Parent folder doesn\'t exist'});
+            return res.status(404).json({error: 'Parent folder doesn\'t exist'});
         }
 
         // check if sub folder already exists in the parent folder
         const checkSubFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [sub_folder_name, user_id, "./"+parent_folder_name+"/"+sub_folder_name+"/"]);
         if(checkSubFolder.rows.length > 0){
-            return res.status(401).json({error: 'Sub folder already exists'});
+            return res.status(403).json({error: 'Sub folder already exists'});
         }
         
         
@@ -130,7 +130,7 @@ router.post('/upload', authticateToken, async function(req, res) {
         // check if parent folder exists or not
         const checkFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [parent_folder_name, user_id, "./"]);
         if(checkFolder.rows.length === 0){
-            return res.status(401).json({error: 'Parent folder doesn\'t exist'});
+            return res.status(404).json({error: 'Parent folder doesn\'t exist'});
         }
         uploadPath = checkFolder.rows[0].file_id+"/";
         normalUploadPath += parent_folder_name+"/";
@@ -139,7 +139,7 @@ router.post('/upload', authticateToken, async function(req, res) {
             // check if sub folder exists in the parent folder
             const checkSubFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [sub_folder_name, user_id, "./"+parent_folder_name+"/"+sub_folder_name+"/"]);
             if(checkSubFolder.rows.length === 0){
-                return res.status(401).json({error: 'Sub folder doesn\'t exist'});
+                return res.status(404).json({error: 'Sub folder doesn\'t exist'});
             }
             uploadPath = uploadPath + checkSubFolder.rows[0].file_id +"/";
             normalUploadPath = normalUploadPath + sub_folder_name+"/";
@@ -150,7 +150,7 @@ router.post('/upload', authticateToken, async function(req, res) {
     // check if file already exists on the given path
     const checkFile = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [file_name, user_id, normalUploadPath + file_name]);
     if(checkFile.rows.length > 0){
-        return res.status(401).json({error: 'File already exists on the given path'});
+        return res.status(403).json({error: 'File already exists on the given path'});
     }
 
     
@@ -205,7 +205,7 @@ router.get('/list', authticateToken, async (req, res) => {
             // check if parent folder exists or not
             const checkFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [parent_folder_name, user_id, "./"]);
             if(checkFolder.rows.length === 0){
-                return res.status(401).json({error: 'Parent folder doesn\'t exist'});
+                return res.status(404).json({error: 'Parent folder doesn\'t exist'});
             }
             normalUploadPath += parent_folder_name+"/";
     
@@ -213,7 +213,7 @@ router.get('/list', authticateToken, async (req, res) => {
                 // check if sub folder exists in the parent folder
                 const checkSubFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [sub_folder_name, user_id, "./"+parent_folder_name+"/"+sub_folder_name+"/"]);
                 if(checkSubFolder.rows.length === 0){
-                    return res.status(401).json({error: 'Sub folder doesn\'t exist'});
+                    return res.status(404).json({error: 'Sub folder doesn\'t exist'});
                 }
                 normalUploadPath = normalUploadPath + sub_folder_name+"/";
             }
@@ -265,7 +265,7 @@ router.put('/rename', authticateToken, async (req, res) => {
             // check if parent folder exists or not
             const checkFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [parent_folder_name, user_id, "./"]);
             if(checkFolder.rows.length === 0){
-                return res.status(401).json({error: 'Parent folder doesn\'t exist'});
+                return res.status(404).json({error: 'Parent folder doesn\'t exist'});
             }
             normalUploadPath += parent_folder_name+"/";
     
@@ -273,7 +273,7 @@ router.put('/rename', authticateToken, async (req, res) => {
                 // check if sub folder exists in the parent folder
                 const checkSubFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [sub_folder_name, user_id, "./"+parent_folder_name+"/"+sub_folder_name+"/"]);
                 if(checkSubFolder.rows.length === 0){
-                    return res.status(401).json({error: 'Sub folder doesn\'t exist'});
+                    return res.status(404).json({error: 'Sub folder doesn\'t exist'});
                 }
                 normalUploadPath = normalUploadPath + sub_folder_name+"/";
             }
@@ -282,7 +282,7 @@ router.put('/rename', authticateToken, async (req, res) => {
         // check if file exists on the given path
         const checkFile = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [file_name, user_id, normalUploadPath+file_name]);
         if(checkFile.rows.length == 0){
-            return res.status(401).json({error: 'File doesn\'t exists on the given path'});
+            return res.status(404).json({error: 'File doesn\'t exists on the given path'});
         }
 
         try {
@@ -315,7 +315,7 @@ router.delete('/delete_file', authticateToken, async (req, res) => {
             // check if parent folder exists or not
             const checkFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [parent_folder_name, user_id, "./"]);
             if(checkFolder.rows.length === 0){
-                return res.status(401).json({error: 'Parent folder doesn\'t exist'});
+                return res.status(404).json({error: 'Parent folder doesn\'t exist'});
             }
             normalUploadPath += parent_folder_name+"/";
             actualPath += checkFolder.rows[0].file_id+"/";
@@ -324,7 +324,7 @@ router.delete('/delete_file', authticateToken, async (req, res) => {
                 // check if sub folder exists in the parent folder
                 const checkSubFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [sub_folder_name, user_id, "./"+parent_folder_name+"/"+sub_folder_name+"/"]);
                 if(checkSubFolder.rows.length === 0){
-                    return res.status(401).json({error: 'Sub folder doesn\'t exist'});
+                    return res.status(404).json({error: 'Sub folder doesn\'t exist'});
                 }
                 normalUploadPath = normalUploadPath + sub_folder_name+"/";
                 actualPath += checkSubFolder.rows[0].file_id+"/";
@@ -334,7 +334,7 @@ router.delete('/delete_file', authticateToken, async (req, res) => {
         // check if file exists on the given path
         const checkFile = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [file_name, user_id, normalUploadPath+file_name]);
         if(checkFile.rows.length == 0){
-            return res.status(401).json({error: 'File doesn\'t exists on the given path'});
+            return res.status(404).json({error: 'File doesn\'t exists on the given path'});
         }
 
         actualPath += checkFile.rows[0].file_id;
@@ -379,7 +379,7 @@ router.get('/share', authticateToken, async (req, res) => {
         // check if parent folder exists or not
         const checkFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [parent_folder_name, user_id, "./"]);
         if(checkFolder.rows.length === 0){
-            return res.status(401).json({error: 'Parent folder doesn\'t exist'});
+            return res.status(404).json({error: 'Parent folder doesn\'t exist'});
         }
         normalUploadPath += parent_folder_name+"/";
         actualPath += checkFolder.rows[0].file_id+"/";
@@ -388,7 +388,7 @@ router.get('/share', authticateToken, async (req, res) => {
             // check if sub folder exists in the parent folder
             const checkSubFolder = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [sub_folder_name, user_id, "./"+parent_folder_name+"/"+sub_folder_name+"/"]);
             if(checkSubFolder.rows.length === 0){
-                return res.status(401).json({error: 'Sub folder doesn\'t exist'});
+                return res.status(404).json({error: 'Sub folder doesn\'t exist'});
             }
             normalUploadPath = normalUploadPath + sub_folder_name+"/";
             actualPath += checkSubFolder.rows[0].file_id+"/";
@@ -398,7 +398,7 @@ router.get('/share', authticateToken, async (req, res) => {
     // check if file exists on the given path
     const checkFile = await pool.query('SELECT * FROM files WHERE file_name = $1 AND file_owner = $2 AND file_path = $3', [file_name, user_id, normalUploadPath+file_name]);
     if(checkFile.rows.length == 0){
-        return res.status(401).json({error: 'File doesn\'t exists on the given path'});
+        return res.status(404).json({error: 'File doesn\'t exists on the given path'});
     }
 
     actualPath += checkFile.rows[0].file_id;

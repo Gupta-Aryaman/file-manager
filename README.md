@@ -1,11 +1,28 @@
-## File Management System using Nodejs and AWS s3 bucket
+# File Management System using Nodejs and AWS s3 bucket
+
+## Functionality 
+The file manager api helps the users to create folders, subfolders and upload files on AWS S3 bucket. It can also be used to generate a public link to share the files with your friends.
+Additionally it has the basic functionalities such as -
+1. Signup, Login (maintaned via JWT tokens)
+2. Parent and Subfolder creation
+3. Upload file to desired folder
+4. list all files and folders ( can list inside a folder as well )
+5. delete a particular file residing inside a folder/sub_folder
+6. generate a public URL to share with your friends
+
+
+## API Documentation
+https://documenter.getpostman.com/view/26435485/2s9YsRd9cB
+
+## Getting Started
+To get a local copy up and running, please follow these simple steps.
+
 
 ### Prerequisites
 - Node.js (Version: >=20.x)
-- PostgreSQL
+- PostgreSQL and pgAdmin
 - AWS Account
-
-*The following commands are for linux based system
+- Linux OS
 
 ### Setup
 1. Clone the repo
@@ -32,13 +49,13 @@ DB_PORT = 5432
 DB_NAME = file_manager 
 ```
 
-5. AWS S3 Bucket Creation- 
+5. **AWS S3 Bucket Creation**- 
 Create a bucket in AWS S3. Keep a note of the AWS Region and Bucket Name. Keep the Public Access Permissions as follows: 
 ![permissions](help_files/image.png)
 
 > **Replace** < AWS_BUCKET_NAME > in .env with the BUCKET_NAME just created
 
-6. IAM User Creation and AWS config setup- 
+6. **IAM User Creation and AWS config setup**- 
     - **STEP 1** Go to "IAM" in AWS Console. 
     - **STEP 2** Create a new user
     - **STEP 3** Select "Add user to group"
@@ -75,7 +92,7 @@ Create a bucket in AWS S3. Keep a note of the AWS Region and Bucket Name. Keep t
     aws_secret_access_key = <secret_access_key>
     ```
 
-7. Setting up the PostgreSQL Database - 
+7. **Setting up the PostgreSQL Database** - 
     - Open pgAdmin -> create a server -> create database and put the database name **file_manager**
     - Right click the database **file_manager** and click on "Query Tool"
     - Copy the following commands and run them in the Query Tool one by one
@@ -102,3 +119,12 @@ Create a bucket in AWS S3. Keep a note of the AWS Region and Bucket Name. Keep t
 
 
 ### Run the project
+Run the project via 
+```
+npm run dev
+```
+
+
+
+
+
