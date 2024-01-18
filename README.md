@@ -14,6 +14,9 @@ Additionally it has the basic functionalities such as -
 ## API Documentation
 https://documenter.getpostman.com/view/26435485/2s9YsRd9cB
 
+## Database schema
+![erd](help_files/erd.png)
+
 ## Getting Started
 To get a local copy up and running, please follow these simple steps.
 
@@ -113,6 +116,7 @@ Create a bucket in AWS S3. Keep a note of the AWS Region and Bucket Name. Keep t
         file_name TEXT NOT NULL,
         file_path TEXT NOT NULL,
         file_owner uuid NOT NULL,
+        is_folder BOOLEAN NOT NULL,
         FOREIGN KEY (file_owner) REFERENCES users(user_id)
     );
     ```

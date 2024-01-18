@@ -14,5 +14,6 @@ CREATE TABLE files(
     file_name TEXT NOT NULL,
     file_path TEXT NOT NULL,
     file_owner uuid NOT NULL,
+    is_folder BOOLEAN NOT NULL,
     FOREIGN KEY (file_owner) REFERENCES users(user_id)
 );
