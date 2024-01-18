@@ -9,11 +9,6 @@ CREATE TABLE users(
     user_password TEXT NOT NULL
 );
 
-SELECT * FROM users;
-
-INSERT INTO users(user_name, user_email, user_password) VALUES('aryaman', 'aryaman@gmail.com', 'aryaman123');
-
-
 CREATE TABLE files(
     file_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     file_name TEXT NOT NULL,
