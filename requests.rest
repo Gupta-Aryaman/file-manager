@@ -28,20 +28,21 @@ Authorization: Bearer <token>
 ###
 POST http://localhost:5000/api/file_manager/create_folder
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTdiZmVjZmQtZDg1Mi00NWY2LWEyNzYtNmY1MzcwMmM4ZTIzIiwidXNlcl9uYW1lIjoiSm9obiBEb2UiLCJ1c2VyX2VtYWlsIjoiam9obkBlbWFpbC5jb20iLCJpYXQiOjE3MDU1MjQ3MTcsImV4cCI6MTcwNTUyNTYxN30.qld1EOjLWTMMiQUV6SeG4yIBJckM4G_lt5CbznbU1hw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTdiZmVjZmQtZDg1Mi00NWY2LWEyNzYtNmY1MzcwMmM4ZTIzIiwidXNlcl9uYW1lIjoiSm9obiBEb2UiLCJ1c2VyX2VtYWlsIjoiam9obkBlbWFpbC5jb20iLCJpYXQiOjE3MDU1NjkzODMsImV4cCI6MTcwNTU3MDI4M30.5en3beU4cblBq5S2YMZeksJItD_JKnoGKOZQNGTWnEQ
 
 {
-    "folder_name": "temp"
+    "folder_name": "main_folder"
 }
 
 ###
 POST http://localhost:5000/api/file_manager/create_subfolder
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzY4OGRjMzEtNDQ3ZC00YWVkLTk4ZTItYjMyOGM0OTE1MmE0IiwidXNlcl9uYW1lIjoiQXJ5YW1hbiBHdXB0YSIsInVzZXJfZW1haWwiOiJhcnlhbWFuQGVtYWlsLmNvbSIsImlhdCI6MTcwNTUyNDE4OSwiZXhwIjoxNzA1NTI1MDg5fQ.30vruHfEoGnYfpcy9tIK6kAB7tapCb83RkpIkstprM4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTdiZmVjZmQtZDg1Mi00NWY2LWEyNzYtNmY1MzcwMmM4ZTIzIiwidXNlcl9uYW1lIjoiSm9obiBEb2UiLCJ1c2VyX2VtYWlsIjoiam9obkBlbWFpbC5jb20iLCJpYXQiOjE3MDU1NjkzODMsImV4cCI6MTcwNTU3MDI4M30.5en3beU4cblBq5S2YMZeksJItD_JKnoGKOZQNGTWnEQ
 
 {
-    "sub_folder_name": "temp2",
-    "parent_folder_name": "temp2"
+    "parent_folder_name": "main_folder",
+    "sub_folder_name": "sub_folder_main"
+    
 }
 
 
@@ -55,4 +56,53 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzY4O
     "parent_folder_name": "temp2",
     "sampleFile": <file>,
     "file_name": "test.txt"
+}
+
+###
+
+GET http://localhost:5000/api/file_manager/list
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTdiZmVjZmQtZDg1Mi00NWY2LWEyNzYtNmY1MzcwMmM4ZTIzIiwidXNlcl9uYW1lIjoiSm9obiBEb2UiLCJ1c2VyX2VtYWlsIjoiam9obkBlbWFpbC5jb20iLCJpYXQiOjE3MDU1NjkzODMsImV4cCI6MTcwNTU3MDI4M30.5en3beU4cblBq5S2YMZeksJItD_JKnoGKOZQNGTWnEQ
+
+{
+    "parent_folder_name": "",
+    "sub_folder_name": ""
+}
+
+
+###
+
+PUT http://localhost:5000/api/file_manager/rename
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTdiZmVjZmQtZDg1Mi00NWY2LWEyNzYtNmY1MzcwMmM4ZTIzIiwidXNlcl9uYW1lIjoiSm9obiBEb2UiLCJ1c2VyX2VtYWlsIjoiam9obkBlbWFpbC5jb20iLCJpYXQiOjE3MDU1NjkzODMsImV4cCI6MTcwNTU3MDI4M30.5en3beU4cblBq5S2YMZeksJItD_JKnoGKOZQNGTWnEQ
+
+{
+    "parent_folder_name": "main_folder",
+    "sub_folder_name": "",
+    "file_name": "test.pdf",
+    "new_name": "new_name.pdf"    
+}
+
+###
+
+DELETE http://localhost:5000/api/file_manager/delete_file
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTdiZmVjZmQtZDg1Mi00NWY2LWEyNzYtNmY1MzcwMmM4ZTIzIiwidXNlcl9uYW1lIjoiSm9obiBEb2UiLCJ1c2VyX2VtYWlsIjoiam9obkBlbWFpbC5jb20iLCJpYXQiOjE3MDU1NjkzODMsImV4cCI6MTcwNTU3MDI4M30.5en3beU4cblBq5S2YMZeksJItD_JKnoGKOZQNGTWnEQ
+
+{
+    "parent_folder_name": "main_folder",
+    "sub_folder_name": "",
+    "file_name": "new_name.pdf"
+}
+
+
+###
+GET http://localhost:5000/api/file_manager/share
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTdiZmVjZmQtZDg1Mi00NWY2LWEyNzYtNmY1MzcwMmM4ZTIzIiwidXNlcl9uYW1lIjoiSm9obiBEb2UiLCJ1c2VyX2VtYWlsIjoiam9obkBlbWFpbC5jb20iLCJpYXQiOjE3MDU1NzA3NjUsImV4cCI6MTcwNTU3MTY2NX0.HRRJVyoQIpuhDe4GNmHmmzMbKtA86In03BqKfiCiFjw
+
+{
+    "parent_folder_name": "main_folder",
+    "sub_folder_name": "",
+    "file_name": "pic.png"
 }
