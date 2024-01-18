@@ -1,4 +1,4 @@
-# File Management System using Nodejs and AWS s3 bucket
+# File Manager for AWS S3 using Nodejs
 
 ## Functionality 
 The file manager api helps the users to create folders, subfolders and upload files on AWS S3 bucket. It can also be used to generate a public link to share the files with your friends.
