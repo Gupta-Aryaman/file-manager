@@ -13,7 +13,7 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "aryaman@email.com",
+    "email": "john@email.com",
     "password": "123456"
 }
 
@@ -23,3 +23,36 @@ Content-Type: application/json
 GET http://localhost:5000/api/users/test
 Content-Type: application/json
 Authorization: Bearer <token>
+
+
+###
+POST http://localhost:5000/api/file_manager/create_folder
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYTdiZmVjZmQtZDg1Mi00NWY2LWEyNzYtNmY1MzcwMmM4ZTIzIiwidXNlcl9uYW1lIjoiSm9obiBEb2UiLCJ1c2VyX2VtYWlsIjoiam9obkBlbWFpbC5jb20iLCJpYXQiOjE3MDU1MjQ3MTcsImV4cCI6MTcwNTUyNTYxN30.qld1EOjLWTMMiQUV6SeG4yIBJckM4G_lt5CbznbU1hw
+
+{
+    "folder_name": "temp"
+}
+
+###
+POST http://localhost:5000/api/file_manager/create_subfolder
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzY4OGRjMzEtNDQ3ZC00YWVkLTk4ZTItYjMyOGM0OTE1MmE0IiwidXNlcl9uYW1lIjoiQXJ5YW1hbiBHdXB0YSIsInVzZXJfZW1haWwiOiJhcnlhbWFuQGVtYWlsLmNvbSIsImlhdCI6MTcwNTUyNDE4OSwiZXhwIjoxNzA1NTI1MDg5fQ.30vruHfEoGnYfpcy9tIK6kAB7tapCb83RkpIkstprM4
+
+{
+    "sub_folder_name": "temp2",
+    "parent_folder_name": "temp2"
+}
+
+
+###
+POST http://localhost:5000/api/file_manager/upload
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzY4OGRjMzEtNDQ3ZC00YWVkLTk4ZTItYjMyOGM0OTE1MmE0IiwidXNlcl9uYW1lIjoiQXJ5YW1hbiBHdXB0YSIsInVzZXJfZW1haWwiOiJhcnlhbWFuQGVtYWlsLmNvbSIsImlhdCI6MTcwNTUyNDE4OSwiZXhwIjoxNzA1NTI1MDg5fQ.30vruHfEoGnYfpcy9tIK6kAB7tapCb83RkpIkstprM4
+
+{
+    "sub_folder_name": "temp2",
+    "parent_folder_name": "temp2",
+    "sampleFile": <file>,
+    "file_name": "test.txt"
+}

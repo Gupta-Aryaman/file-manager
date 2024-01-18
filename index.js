@@ -6,6 +6,7 @@ import {dirname, join} from 'path';
 import { fileURLToPath } from 'url';
 import usersRouter from './routes/user-routes.js';
 import authRouter from './routes/auth-routes.js';
+import fileManagerRouter from './routes/file_manager-routes.js';
 
 dotenv.config();
 
@@ -21,5 +22,6 @@ app.use(cookieParser());
 
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/file_manager', fileManagerRouter);
 
 app.listen(PORT, ()=>console.log(`Server is listening on ${PORT}`))
